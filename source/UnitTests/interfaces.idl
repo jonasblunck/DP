@@ -1,0 +1,62 @@
+import "oaidl.idl";
+import "ocidl.idl";
+
+[
+  uuid(A3425BD7-D547-4636-A666-147C35DE1327),
+  object
+]
+interface ITestInterface2 : IUnknown
+{
+  HRESULT MethodMix([in] long, [in] BSTR);
+}
+
+[
+  uuid(A3425BD7-D547-4636-A666-147C35DE1329),
+  object
+]
+interface ITestInterface3 : IUnknown
+{
+  HRESULT MethodFooBar([in] BSTR);
+}
+
+[
+  uuid(48937FFC-8DD2-4739-9F54-E5B969DD9BDF),
+  object
+]
+interface ITestInterface : IUnknown
+{
+  HRESULT GetFooBarInterface([in] REFIID riid, [out, retval, iid_is(riid)] IUnknown** pp);
+  HRESULT MethodInt([in] int a);
+  HRESULT MethodBSTR([in] BSTR bstr);
+  HRESULT MethodLong([in] long );
+  HRESULT MethodFloat([in] float);
+  HRESULT MethodIntOut([in, out] int*);
+  HRESULT MethodGUID_BSTR([in] GUID, BSTR);
+  HRESULT MethodShort([in] SHORT s);
+  HRESULT MethodBOOL([in] BOOL, [in] BSTR);
+  HRESULT MethodDouble([in] double, [in] BSTR);
+  HRESULT MethodVARPTROut([out] VARIANT* p);
+  HRESULT MethodVARIANT([in] VARIANT);
+  HRESULT GetTestInterface2([out, retval] ITestInterface2** pp);
+}
+
+[
+  uuid(97BE6885-AC69-472E-B153-E1A1A65C0C35),
+  version(1.0),
+  helpstring("TestInterface Library")
+]
+library UnitTestLibrary
+{
+  importlib("stdole32.tlb");
+  importlib("stdole2.tlb");
+
+  [
+    uuid(DAE2DE76-CB4A-4EE7-9D49-DCD763EC9ECF),
+  ]
+  coclass UnitTestCoClassNotToBeCreated
+  {
+    [default] interface ITestInterface;
+    interface ITestInterface2;
+    interface ITestInterface3;
+  };
+};

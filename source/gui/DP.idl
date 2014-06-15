@@ -1,0 +1,49 @@
+// DP.idl : IDL source for DP.exe
+//
+
+// This file will be processed by the MIDL tool to
+// produce the type library (DP.tlb) and marshalling code.
+
+import "oaidl.idl";
+import "ocidl.idl";
+
+// Used to launch OLEView
+	[
+		uuid(fc37e5ba-4a8e-11ce-870b-0800368d2302),
+		object
+	]
+	interface ITypeLibViewer : IUnknown
+	{
+		HRESULT View([in]HWND hwndParent, [in]REFIID riid, [in]IUnknown* punk);
+	}
+
+// Dummy interface for the trace listener
+	[
+		object,
+		uuid(7DD08DA3-79A5-407E-AFF8-A1DB3B518F19),
+		helpstring("_IDummy Interface"),
+		pointer_default(unique)
+	]
+	interface _IDummy : IUnknown
+	{
+	};
+
+[
+	uuid(2FFC201E-7E58-4133-A890-387438A47C10),
+	version(1.0),
+	helpstring("DP 1.0 Type Library")
+]
+library DPLib
+{
+	importlib("stdole32.tlb");
+	importlib("stdole2.tlb");
+
+	[
+		uuid(A115A87C-5C74-460E-9180-E394D2976CD0),
+		helpstring("TraceListener Class")
+	]
+	coclass TraceListener
+	{
+		[default] interface _IDummy;
+	};
+};

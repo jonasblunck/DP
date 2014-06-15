@@ -1,0 +1,534 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "atlres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""atlres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "1 TYPELIB ""DP.tlb""\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Menu
+//
+
+IDR_MAINFRAME MENU 
+BEGIN
+    POPUP "&File"
+    BEGIN
+        MENUITEM "&Save Trace\tCtrl+S",         ID_FILE_SAVE
+        MENUITEM "Save Trace &As...",           ID_FILE_SAVE_AS
+        MENUITEM SEPARATOR
+        MENUITEM "E&xit",                       ID_APP_EXIT
+    END
+    POPUP "&Edit"
+    BEGIN
+        MENUITEM "&Find Function\tCtrl+F",      ID_EDIT_FIND
+        MENUITEM SEPARATOR
+        MENUITEM "Active &Hooks...\tCtrl+H",    ID_EDIT_HOOKS
+        MENUITEM SEPARATOR
+        MENUITEM "&Options...",                 ID_EDIT_OPTIONS
+    END
+    POPUP "&View"
+    BEGIN
+        MENUITEM "&Status Bar",                 ID_VIEW_STATUS_BAR
+        MENUITEM SEPARATOR
+        MENUITEM "&Show Full Path\tCtrl+P",     ID_VIEW_TOGGLE_PATH
+        MENUITEM "&Refresh\tF5",                ID_VIEW_REFRESH
+    END
+    POPUP "&Module"
+    BEGIN
+        MENUITEM "View in &OleView...",         ID_MODULE_VIEWTYPELIB
+        MENUITEM "View in &Depends...",         ID_MODULE_VIEWDEPENDS
+        MENUITEM "P&roperties...",              ID_MODULE_PROPERTIES
+        MENUITEM SEPARATOR
+        MENUITEM "&Toggle Trace",               ID_MODULE_PAUSE
+    END
+    POPUP "&Function"
+    BEGIN
+        MENUITEM "&Hook",                       ID_FUNCTION_HOOK
+        MENUITEM "&Unhook",                     ID_FUNCTION_UNHOOK
+        MENUITEM SEPARATOR
+        MENUITEM "Search &MSDN",                ID_FUNCTION_SEARCH_MSDN
+        MENUITEM "Search &Google",              ID_FUNCTION_SEARCH_GOOGLE
+    END
+    POPUP "T&race"
+    BEGIN
+        MENUITEM "&Copy\tCtrl+C",               ID_TRACE_COPY
+        MENUITEM "&Select All\tCtrl+A",         ID_TRACE_SELECT_ALL
+        MENUITEM "C&lear\tCtrl+D",              ID_TRACE_CLEAR
+        MENUITEM SEPARATOR
+        MENUITEM "L&ocate Function",            ID_TRACE_LOCATE
+        MENUITEM "&Unhook Function",            ID_TRACE_UNHOOK
+        MENUITEM SEPARATOR
+        MENUITEM "&Toggle Trace",               ID_TRACE_PAUSE
+    END
+    POPUP "&Help"
+    BEGIN
+        MENUITEM "&Help...\tF1",                ID_HELP_HELP
+        MENUITEM "&About...",                   ID_APP_ABOUT
+    END
+END
+
+IDR_POPUP_EXPORTS MENU 
+BEGIN
+    POPUP ""
+    BEGIN
+        MENUITEM "&Hook",                       ID_FUNCTION_HOOK
+        MENUITEM "&Unhook",                     ID_FUNCTION_UNHOOK
+        MENUITEM SEPARATOR
+        MENUITEM "Search &MSDN",                ID_FUNCTION_SEARCH_MSDN
+        MENUITEM "Search &Google",              ID_FUNCTION_SEARCH_GOOGLE
+    END
+END
+
+IDR_POPUP_MODULES MENU 
+BEGIN
+    POPUP ""
+    BEGIN
+        MENUITEM "&Find Function...",           ID_EDIT_FIND
+        MENUITEM SEPARATOR
+        MENUITEM "&Hook All",                   ID_MODULE_HOOK_ALL
+        MENUITEM "&Unhook All",                 ID_MODULE_UNHOOK_ALL
+        MENUITEM SEPARATOR
+        MENUITEM "View in &OleView...",         ID_MODULE_VIEWTYPELIB
+        MENUITEM "View in &Depends...",         ID_MODULE_VIEWDEPENDS
+        MENUITEM "&Properties...",              ID_MODULE_PROPERTIES
+        MENUITEM SEPARATOR
+        MENUITEM "&Toggle Trace",               ID_MODULE_PAUSE
+    END
+END
+
+IDR_POPUP_TRACE MENU 
+BEGIN
+    POPUP ""
+    BEGIN
+        MENUITEM "&Copy",                       ID_TRACE_COPY
+        MENUITEM SEPARATOR
+        MENUITEM "&Unhook",                     ID_TRACE_UNHOOK
+        MENUITEM "&Locate",                     ID_TRACE_LOCATE
+        MENUITEM SEPARATOR
+        MENUITEM "&Toggle Trace",               ID_TRACE_PAUSE
+    END
+END
+
+IDR_POPUP_FINDVIEW MENU 
+BEGIN
+    POPUP ""
+    BEGIN
+        MENUITEM "&Hook",                       ID_FUNCTION_HOOK
+        MENUITEM "Show Active Hooks",           ID_EDIT_HOOKS
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "DP.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOG  0, 0, 180, 111
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About"
+FONT 8, "MS Sans Serif"
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,65,90,50,14
+    LTEXT           "Developer Playground",IDC_STATIC,65,15,70,10
+    LTEXT           "Version 1.1",IDC_STATIC,65,25,70,10
+    LTEXT           "Copyright © 2003",IDC_STATIC,65,41,70,10
+    CONTROL         "",IDC_HL_BLUNCK,"Static",0xa,65,55,70,10
+    CONTROL         "",IDC_HL_WINWONK,"Static",0xa,65,68,70,10
+    ICON            IDR_MAINFRAME,IDC_STATIC,29,28,20,20,SS_REALSIZEIMAGE
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 173
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 104
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Accelerator
+//
+
+IDR_MAINFRAME ACCELERATORS 
+BEGIN
+    "A",            ID_TRACE_SELECT_ALL,    VIRTKEY, CONTROL, NOINVERT
+    "C",            ID_TRACE_COPY,          VIRTKEY, CONTROL, NOINVERT
+    "D",            ID_TRACE_CLEAR,         VIRTKEY, CONTROL, NOINVERT
+    "F",            ID_EDIT_FIND,           VIRTKEY, CONTROL, NOINVERT
+    "H",            ID_EDIT_HOOKS,          VIRTKEY, CONTROL, NOINVERT
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_VIEW_TOGGLE_PATH,    VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
+    VK_F1,          ID_HELP_HELP,           VIRTKEY, NOINVERT
+    VK_F3,          ID_EDIT_FIND_NEXT,      VIRTKEY, NOINVERT
+    VK_F5,          ID_VIEW_REFRESH,        VIRTKEY, NOINVERT
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,1,0,34
+ PRODUCTVERSION 1,1,0,34
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x2L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "FileDescription", "Developer Playground"
+            VALUE "FileVersion", "1, 2, 0, 35"
+            VALUE "InternalName", "DP"
+            VALUE "LegalCopyright", "Copyright © 2002-2003"
+            VALUE "OriginalFilename", "DP.exe"
+            VALUE "ProductName", "Developer Playground"
+            VALUE "ProductVersion", "1, 2, 0, 35"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_DP                  REGISTRY                "DP.rgs"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDR_MAINFRAME           BITMAP                  "toolbar.bmp"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Toolbar
+//
+
+IDR_MAINFRAME TOOLBAR  16, 16
+BEGIN
+    BUTTON      ID_FILE_SAVE
+    SEPARATOR
+    BUTTON      ID_EDIT_FIND
+    BUTTON      ID_EDIT_FIND_NEXT
+    SEPARATOR
+    BUTTON      ID_VIEW_REFRESH
+    BUTTON      ID_VIEW_TOGGLE_PATH
+    SEPARATOR
+    BUTTON      ID_MODULE_VIEWTYPELIB
+    BUTTON      ID_MODULE_VIEWDEPENDS
+    BUTTON      ID_MODULE_PROPERTIES
+    SEPARATOR
+    BUTTON      ID_FUNCTION_SEARCH_MSDN
+    BUTTON      ID_FUNCTION_SEARCH_GOOGLE
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDR_MAINFRAME           "Developer Playground"
+END
+
+STRINGTABLE 
+BEGIN
+    ATL_IDS_SCSIZE          "Change the window size"
+    ATL_IDS_SCMOVE          "Change the window position"
+    ATL_IDS_SCMINIMIZE      "Reduce the window to an icon"
+    ATL_IDS_SCMAXIMIZE      "Enlarge the window to full size"
+    ATL_IDS_SCNEXTWINDOW    "Switch to the next document window"
+    ATL_IDS_SCPREVWINDOW    "Switch to the previous document window"
+    ATL_IDS_SCCLOSE         "Close the active window and prompts to save the documents"
+END
+
+STRINGTABLE 
+BEGIN
+    ATL_IDS_SCRESTORE       "Restore the window to normal size"
+    ATL_IDS_SCTASKLIST      "Activate Task List"
+    ATL_IDS_MDICHILD        "Activate this window"
+END
+
+STRINGTABLE 
+BEGIN
+    ATL_IDS_IDLEMESSAGE     "Ready"
+END
+
+STRINGTABLE 
+BEGIN
+    ATL_IDS_MRU_FILE        "Open this document"
+END
+
+STRINGTABLE 
+BEGIN
+    IDS_PROJNAME            "DP"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_APP_ABOUT            "Display program information, version number and copyright\nAbout"
+    ID_APP_EXIT             "Quit the application; prompts to save traces\nExit"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_FILE_SAVE            "Save the current trace output\nSave"
+    ID_FILE_SAVE_AS         "Save the current trace output with a new name\nSave As"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_EDIT_FIND            "Find the specified function\nFind"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_VIEW_TOGGLE_PATH     "Toggle path of processes and modules in tree view\nShow Full Path"
+    ID_EDIT_HOOKS           "Show hooks dialog"
+    ID_EDIT_FIND_NEXT       "Find next function matching the specified string\nFind Next"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_EDIT_OPTIONS         "Show the options dialog"
+    ID_TRACE_COPY           "Copy the selected trace entires to clipboard"
+    ID_TRACE_SELECT_ALL     "Select all trace entries"
+    ID_TRACE_CLEAR          "Clear trace window"
+    ID_TRACE_UNHOOK         "Unhook selected trace entries"
+    ID_TRACE_LOCATE         "Locate the selected trace entry in the process view"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_VIEW_STATUS_BAR      "Show or hide the status bar\nToggle StatusBar"
+    ID_VIEW_REFRESH         "Reload process and module information\nRefresh"
+END
+
+STRINGTABLE 
+BEGIN
+    ID_MODULE_HOOK_ALL      "Hook all exported functions in this module"
+    ID_MODULE_UNHOOK_ALL    "Unhook all hooked functions in this module"
+    ID_MODULE_VIEWTYPELIB   "View Module in OleView\nView in OleView"
+    ID_MODULE_VIEWDEPENDS   "View Module in Dependency Walker\nView in Depends"
+    ID_MODULE_PROPERTIES    "Show module properties\nProperties"
+    ID_FUNCTION_HOOK        "Hook selected functions"
+    ID_FUNCTION_UNHOOK      "Unhook selected functions"
+    ID_FUNCTION_SEARCH_MSDN "Search MSDN for selected function\nSearch MSDN"
+    ID_FUNCTION_SEARCH_GOOGLE 
+                            "Search Google for selected function\nSearch Google"
+END
+
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Swedish resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_SVE)
+#ifdef _WIN32
+LANGUAGE LANG_SWEDISH, SUBLANG_DEFAULT
+#pragma code_page(1252)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_FIND DIALOG  0, 0, 202, 46
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Find"
+FONT 8, "MS Sans Serif"
+BEGIN
+    LTEXT           "Fi&nd function",-1,7,10,42,8
+    EDITTEXT        IDC_EDIT_FIND,52,7,88,14,ES_AUTOHSCROLL
+    CONTROL         "&Match whole word",IDC_CHK_MATCH_WHOLE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,7,27,74,10
+    DEFPUSHBUTTON   "&Find Next",IDOK,145,7,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,145,25,50,14
+END
+
+IDD_HOOKEDFUNCTIONS DIALOGEX 0, 0, 328, 217
+STYLE DS_SETFONT | WS_POPUP | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME
+CAPTION "Active Hooks"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    DEFPUSHBUTTON   "Close",IDCANCEL,271,196,50,14
+    CONTROL         "Tree1",IDC_TREE_HOOKS,"SysTreeView32",TVS_HASBUTTONS | TVS_HASLINES | TVS_LINESATROOT | TVS_SHOWSELALWAYS | WS_BORDER | WS_TABSTOP,7,7,255,203
+    PUSHBUTTON      "Unhook",IDC_UNHOOK,271,7,50,14,WS_DISABLED
+    PUSHBUTTON      "Unhook all",IDC_UNHOOK_ALL,271,26,50,14
+END
+
+IDD_OPTIONS DIALOGEX 0, 0, 234, 186
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Options"
+FONT 8, "MS Sans Serif", 0, 0, 0x0
+BEGIN
+    LTEXT           "&Depends",IDC_STATIC,21,23,31,10
+    EDITTEXT        IDC_EDIT_PATH_DEPENDS,56,21,138,14,ES_AUTOHSCROLL
+    PUSHBUTTON      "...",IDC_BUTTON_BROWSE_DEPENDS,197,21,16,14
+    CONTROL         "&Enable 'Debug Programs' privilege automatically",IDC_CHECK_ENABLE_PRIV,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,66,176,12
+    CONTROL         "&Undecorate symbol names",IDC_CHECK_UNDECORATE,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,79,176,12
+    CONTROL         "&Strip off A/W suffix before searching for function",IDC_CHECK_STRIP_AW,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,92,176,12
+    DEFPUSHBUTTON   "OK",IDOK,122,165,50,14
+    PUSHBUTTON      "Cancel",IDCANCEL,177,165,50,14
+    GROUPBOX        "Options",IDC_STATIC,7,51,220,104
+    GROUPBOX        "Tool paths",IDC_STATIC,7,7,220,38
+    CONTROL         "Auto-disable &trace while hooking",IDC_CHECK_PAUSE,
+                    "Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,105,176,12
+    CONTROL         "&Autoscoll trace view",IDC_CHECK_AUTOSCROLL,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,21,118,176,12
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_FIND, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 195
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 39
+    END
+
+    IDD_HOOKEDFUNCTIONS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 321
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 210
+    END
+
+    IDD_OPTIONS, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 227
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 179
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// REGISTRY
+//
+
+IDR_TRACELISTENER       REGISTRY                "TraceListener.rgs"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Bitmap
+//
+
+IDB_MODULES             BITMAP                  "modules.bmp"
+#endif    // Swedish resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+1 TYPELIB "DP.tlb"
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

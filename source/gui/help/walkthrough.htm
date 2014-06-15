@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link type="text/css" rel="stylesheet" title="Default Stylesheet" href="styles/styles.css">
+	<title>Developer Playground - Walkthrough</title>
+</head>
+<body>
+	<div class="body">
+		<h1>Developer Playground</h1>
+		<h5>&copy; 2002-2003 Jonas Blunck &amp; Kim Gräsman</h5>
+
+		<h3>Walkthrough</h3>
+		<p>
+			We thought we'd use this section as a brief walkthrough of the functionality in Developer Playground. Each step will be accompanied by a detail screenshot, to make it easier for you to follow along.
+		</p>
+		
+		<h4>Hooking &amp; Tracing</h4>
+		<p>
+			Developer Playground has one main window, conveniently splitted into three regions;
+			<div class="figure">
+				<img src="images/dp_full.png" alt="Developer Playground startup screen">
+			</div>
+			Note that <strong>ADVAPI32.DLL</strong> is selected, and the exports from this DLL are listed in the right-hand listview.
+		</p>
+		<p>
+			Next, we want to hook all registry-related exports from ADVAPI32.DLL, so we sort exports by name, select all Reg-functions, and right-click as shown below:
+			<div class="figure">
+				<img src="images/dp_hook.png" alt="Hooking multiple methods">
+			</div>
+			Clicking the <strong>Hook</strong> menu alternative will take us to the next step.
+		</p>
+		<p>
+			Note how the trace listview is instantly populated with all the registry functions, and the event <strong>Hooked</strong>. Another visual feedback is that the icon of all hooked functions has turned turquoise, instead of pink.
+			<div class="figure">
+				<img src="images/dp_hooked.png" alt="Showing hooked methods">
+			</div>
+			This means Developer Playground has set up a trace callback for each time the registry functions are called from within Internet Explorer.
+		</p>
+		<p>
+			Next step is to switch to Internet Explorer, and press F5, to refresh. Whatever it does, we can be sure that it calls a lot of registry functionality. Every single call is echoed back into Developer Playground:
+			<div class="figure">
+				<img src="images/dp_trace.png" alt="Showing traces">
+			</div>
+			The new entries in the list have the event set to <strong>Trace</strong>. As you can see, it's relatively simple to hook and trace processes. Explore the context menus further to see how to hook all functions in a DLL, unhook a function from the trace view, etc.
+		</p>
+		
+		<h4>Active Hooks</h4>
+		<p>
+			Using either the menu, <b>Edit</b> -&gt; <b>Active Hooks...</b> or its keyboard accelerator, <b>Ctrl-H</b>, will bring up the <b>Active Hooks</b> dialog.
+			<div class="figure">
+				<img src="images/dp_active_hooks.png" alt="Active hooks">
+			</div>
+			This dialog gives you a per-process overview of hooked functions. You can select individual hooks and release them, using the <b>Unhook</b> button, or by double-clicking the function name. You can also select a process and <b>Unhook</b>, or press <b>Unhook all</b> to unhook all existing hooks in all processes. The dialog is resizable &mdash; if you have many active hooks, you can just size the window to fit all of them.
+		</p>
+		
+		<h4>Module and Function Utilities</h4>
+		<p>
+			The menus and toolbars provide little utility functions for both modules and DLL exports. In the module treeview, right-click any module for a context menu:
+			<div class="figure">
+				<img src="images/dp_module_menu.png" alt="Utility menu alternatives">
+			</div>
+			The alternatives we're interested in here, are <b>View in OleView</b>, <b>View in Depends</b> and <b>Properties</b>.<br>
+			<b>View in OleView</b> opens up the module in the OLE/COM Object Viewer, and shows any embedded type libraries. Very handy for COM developers.<br>
+			<b>View in Depends</b> loads the module in Dependency Walker, and shows its DLL dependencies. For this to work reliably, you'll have to configure the path to Depends under <b>Edit</b> -&gt; <b>Options...</b>.<br>
+			<b>Properties</b> launches the Explorer Properties dialog for the selected module. This is great for viewing version info.<br>
+		</p>
+		<p>
+			The first two assume that you have some version of Visual Studio installed, which comes with OleView and Depends as tools. Depends is also available as a separate download from <a target="_blank" href="http://www.dependencywalker.com">http://www.dependencywalker.com</a>.
+		</p>
+		<p>
+			As for DLL exports, they have another set of utility functions:
+			<div class="figure">
+				<img src="images/dp_export_menu.png" alt="Utility menu alternatives">
+			</div>
+			<b>Search MSDN</b> uses <a href="http://www.google.com" target="_blank">Google</a> to search MSDN for the selected function name.<br>
+			<b>Search Google</b> does a generic Google search for the selected function name.<br>
+		</p>		
+		
+		<h4>Options</h4>
+		<p>
+			The <b>Options</b> dialog is used to configure the more esoteric features of Developer Playground.
+			<div class="figure">
+				<img src="images/dp_options.png" alt="Options Dialog">
+			</div>
+			<b>Tool paths</b> only configures the path to Dependency Walker for now. Just browse up your local path to depends.exe, and it will be saved when you click OK.
+		</p>
+		<p>
+			<b>Enable 'Debug Programs' privilege automatically</b> instructs Developer Playground to attempt to enable said privilege whenever it needs to perform a privileged operation. Note that the privilege still needs to be present in your token, so privilege enabling will likely only work if you're a local administrator, or have manually added <b>Debug Programs</b> to your Windows user in the <b>Local Security Policy</b> MMC snap-in.
+		</p>
+		<p>
+			<b>Undecorate symbol names</b> enables proper decoding of C++ name mangling in the export view.
+		</p>
+		<p>
+			<b>Strip off A/W suffix before searching for function</b> allows you to strip the A/W suffix automatically from function names before searching on either MSDN or Google. This gives much better results in most cases, so it's on by default.
+		</p>
+		<p>
+			<b>Auto-disable trace while hooking</b> temporarily disables traces while performing the hook and trace, so as to avoid <a href="issues.htm">trace bursts and notification loops</a>.
+		</p>
+		<p>
+			<b>Autoscroll trace view</b> ensures the trace view always keeps the newest trace entry visible. Disable it if you want to investigate a specific series of traces without being interrupted by new callbacks.
+		</p>
+		<p>
+			<b>Show 40 bytes from the stack for every trace</b> is a poor man's stack trace. It dumps a hex representation of the stack at the time of the call, so a good portion of patience and a nice magnifying glass can provide parameter details of the call. It is disabled by default.
+		</p>
+		
+		<p class="footer"><a href="index.htm">To Index</a></p>
+	</div>
+</body>
+</html>

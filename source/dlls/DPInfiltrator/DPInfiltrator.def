@@ -1,0 +1,7 @@
+
+; DPInfiltrator.def : Declares the module parameters.
+
+LIBRARY      "DPInfiltrator.DLL"
+
+EXPORTS
+

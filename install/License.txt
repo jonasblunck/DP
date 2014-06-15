@@ -1,0 +1,17 @@
+Developer Playground 1.1
+copyright (c) Kim Gräsman & Jonas Blunck 2003-2014
+all rights reserved
+no warranties extended
+
+License
+********
+Developer Playground is freeware.
+
+Disclamer
+***********
+Developer Playground, AND ANY AND ALL ACCOMPANYING SOFTWARE, FILES, DATA AND
+MATERIALS, ARE DISTRIBUTED AND PROVIDED "AS IS" AND WITH NO
+WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED.
+
+
+

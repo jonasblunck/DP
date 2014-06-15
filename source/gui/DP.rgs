@@ -1,0 +1,12 @@
+HKCR
+{
+	NoRemove AppID
+	{
+		{C4209E04-44A8-4CAB-A195-2C6D58ACF2D5} = s 'DP'
+		'DP.EXE'
+		{
+			val AppID = s {C4209E04-44A8-4CAB-A195-2C6D58ACF2D5}
+			val RunAs = s 'Interactive User'
+		}
+	}
+}

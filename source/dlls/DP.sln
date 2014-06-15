@@ -1,0 +1,33 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DPHelper", "DPHelper\DPHelper.vcproj", "{A1BF8D43-736C-4125-83FE-CD21CAE4E944}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DPInfiltrator", "DPInfiltrator\DPInfiltrator.vcproj", "{476E7997-9A8A-482C-91E8-E5A9CFF6C682}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A1BF8D43-736C-4125-83FE-CD21CAE4E944} = {A1BF8D43-736C-4125-83FE-CD21CAE4E944}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release MinDependency|Win32 = Release MinDependency|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1BF8D43-736C-4125-83FE-CD21CAE4E944}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A1BF8D43-736C-4125-83FE-CD21CAE4E944}.Debug|Win32.Build.0 = Debug|Win32
+		{A1BF8D43-736C-4125-83FE-CD21CAE4E944}.Release MinDependency|Win32.ActiveCfg = Release MinDependency|Win32
+		{A1BF8D43-736C-4125-83FE-CD21CAE4E944}.Release MinDependency|Win32.Build.0 = Release MinDependency|Win32
+		{A1BF8D43-736C-4125-83FE-CD21CAE4E944}.Release|Win32.ActiveCfg = Release MinDependency|Win32
+		{A1BF8D43-736C-4125-83FE-CD21CAE4E944}.Release|Win32.Build.0 = Release MinDependency|Win32
+		{476E7997-9A8A-482C-91E8-E5A9CFF6C682}.Debug|Win32.ActiveCfg = Debug|Win32
+		{476E7997-9A8A-482C-91E8-E5A9CFF6C682}.Debug|Win32.Build.0 = Debug|Win32
+		{476E7997-9A8A-482C-91E8-E5A9CFF6C682}.Release MinDependency|Win32.ActiveCfg = Release|Win32
+		{476E7997-9A8A-482C-91E8-E5A9CFF6C682}.Release MinDependency|Win32.Build.0 = Release|Win32
+		{476E7997-9A8A-482C-91E8-E5A9CFF6C682}.Release|Win32.ActiveCfg = Release|Win32
+		{476E7997-9A8A-482C-91E8-E5A9CFF6C682}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

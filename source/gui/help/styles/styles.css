@@ -1,0 +1,34 @@
+body {
+	font-family: verdana, arial;
+	font-size: 80%;
+	background-color: white;
+}
+.body {
+	margin: 10px;
+	padding: 20px;
+	border: 2px solid black;
+}
+.figure {
+	text-align: center;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+.footer {
+	text-align: center;
+	padding-top: 10px;
+	font-weight: bold;
+}
+dt {
+	padding-top: 5px;
+	font-weight: bold;
+}
+dd {
+	padding-top: 5px;
+}
+pre {
+	border: 1px solid black;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	padding: 16px;
+	background-color: #FFEEDD;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link type="text/css" rel="stylesheet" title="Default Stylesheet" href="styles/styles.css">
+	<title>Developer Playground - Known Issues</title>
+</head>
+<body>
+	<div class="body">
+		<h1>Developer Playground</h1>
+		<h5>&copy; 2002-2003 Jonas Blunck &amp; Kim Gräsman</h5>
+		
+		<h3>Known Issues</h3>
+		This is a brief list of the issues that may seem confusing, that we know about and can't fix, or intend to fix later.
+		
+		<h4>Why can't I hook function Foo?</h4>
+		<p>
+			This issue has either of two causes:
+			<dl type="square">
+				<dt>The function is too small</dt>
+				<dd>Size matters, because Developer Playground overwrites the first five bytes of every hooked function with a jump to a routine that takes care of tracing, etc. If the function is smaller than five bytes, we can't hook it safely. <b>CoFreeAllLibraries</b> on Windows XP is an example of an un-hookable function, since it's reduced to an { __asm ret; } sequence.</dd>
+				<dt>The function is needed for the hooking infrastructure to work</dt>
+				<dd>Two functions are sacred to us in the current version: <b>TlsSetValue</b> and <b>TlsGetValue</b>. These cannot be hooked, because we use them to maintain hook metadata. Period.</dd>
+			</dl>
+			Except from these restrictions, all functions <b>should be</b> hookable. <a href="feedback.htm">Please report to us</a> if you find more unhookable functions, and we'll be able to study it further.
+		</p>
+		
+		<h4>Why can't I hook &amp; trace DP.exe?</h4>
+		<p>
+			It simply isn't possible for the DP process to hook itself.<br>
+			We've actually tried to hook DP using another instance of DP, but it just didn't work, so we limited DP.exe to a single running instance.
+		</p>
+
+		<h4>What's the difference between hooking/unhooking and enabling/disabling trace?</h4>
+		<p>
+			Hooking is the act of injecting code into the remote process, which sets up the call interception and callbacks. Enable/Disable trace just toggles the callback into the GUI &mdash; the hooking code is still injected, it just doesn't do anything. So, why is this necessary? Some hooking generates bursts of trace callbacks, and can even go into loops because of the notifications, so it's generally advisable to auto-disable traces while hooking.
+		</p>		
+		<p class="footer"><a href="index.htm">To Index</a></p>
+	</div>
+</body>
+</html>

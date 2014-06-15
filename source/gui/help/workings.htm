@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link type="text/css" rel="stylesheet" title="Default Stylesheet" href="styles/styles.css">
+	<title>Developer Playground - How Stuff Works</title>
+</head>
+<body>
+	<div class="body">
+		<h1>Developer Playground</h1>
+		<h5>&copy; 2002-2003 Jonas Blunck &amp; Kim Gräsman</h5>
+		
+		<h3>How Stuff Works</h3>
+		<p>
+			Applications are built on top of operating systems and other libraries.
+			These provide the foundation and services that developers use to build their
+			applications. The interaction between different API's and applications can
+			be very complex, and to be able to inspect what calls are made, in what
+			order they are made, etc, can drastically help you debug, reverse-engineer
+			and understand application behavior. Some people (Kim and Jonas included)
+			actually think this kind of information is interesting and fun to read. But
+			then again, we are developers.
+		</p>
+		<p>
+			To successfully intercept calls on functions, it's important that the
+			interception code is transparent so that the application cannot know the
+			call was intercepted. Being transparent of course also includes that no
+			parameters passed to the intercepted function are lost or changed.
+		</p>
+		
+		<h4>API Interception and Code Patching</h4>
+		<p>
+			Consider a Win32 API function Foo, whose assembly code looks like this:
+		</p>
+
+<pre>
+push ebp		// 55
+mov ebp, esp		// 8B EC
+push ecx		// 51
+mov [ebp-4], ecx	// 89 4D FC
+mov ecx, eax+20h	// 8B 48 20
+
+...			// more code for Foo, deleted for brevity
+</pre>
+
+		<p>
+			On the left side, you can see the human-readable version of the assembly instructions and on the right you can see the raw machine code that the CPU interprets and executes.
+		</p>
+		<p>
+			To intercept every call made to the Foo function, we will have Foo call us as the first thing Foo does. We will simply divert the call and have Foo jump into our function, Foo_Hook, by placing a jmp instruction at the top of Foo. Unfortunately, it is not possible to insert the jmp instruction without overwriting the code that existed at the beginning of Foo. The jmp instruction takes 5 bytes; consisting of the op-code 0xE9 and the operand, a 4-byte relative offset for the jump. At this point, we have intercepted the call to Foo by overwriting the code at the top of Foo, thus destroying the Foo function. 
+		</p>
+		<p>
+			After inserting the jmp instruction, Foo would look like this:
+		</p>
+
+<pre>
+jmp Foo_Hook		// E9 + 4 bytes relative offset.
+			// Any call to Foo will
+			// immediately jump to Foo_Hook
+
+???			// invalid OP, 4D FC remains
+ 
+mov ecx, eax+20h	// this is where Foo_Stub will
+			// jump back into Foo
+
+...			// rest of Foo code
+</pre>
+
+		<p>
+			Notice that after the jmp instruction, there are 2 bytes that are leftovers from an instruction that the jmp didn't fully overwrite (mov [ebp-4], ecx). A caveat with this approach is that API functions that should be hooked must have instructions that will consume at least 5 bytes worth of executable code. Some functions simply have only a 1 byte ret instruction, and they cannot be hooked (one example on Windows XP would be CoFreeAllLibraries()).
+		</p>
+		<p>
+			Remember, we don't want to change the normal execution path; we just want to be able to trace the call to Foo or any other API function. After our hook has executed and we have done the proper logging, we want to continue the execution of Foo just as if we hadn't intercepted the call. To make that possible, the hook needs the ability to call an unhooked version of Foo. To accomplish this, we'll create a stub function that the hook can call after it has finished up its work. This stub function will consist of the code that the inserted jmp instruction in Foo overwrote. At the end of the stub function, we will insert a jmp instruction that jumps back into Foo, taking into consideration that we should return into Foo after the first jmp, and discard any invalid leftovers (such as the 2 bytes we left when inserting the jmp).
+		</p>
+		<p>
+			The stub function would then look like this:
+		</p>
+		
+<pre>
+push ebp		// 55 
+mov ebp, esp		// 8B EC 
+push ecx		// 51 
+mov [ebp-4], ecx	// 89 4D FC 
+Jmp Foo+7		// jump back into the Foo function
+...
+</pre>
+
+		<p>
+			The first four instructions are copied from the Foo function before it has been damaged by the inserted jmp statement and the fifth instruction is the jmp that will continue the execution of Foo. Notice that all we do is move around the code in memory; we don’t change the semantics of it.
+		</p>
+		<p>
+			The hook function would simply call a function that can log the call to Foo and then call the stub function so that Foo executes as it would have done if the hook never was installed in the first place.
+		</p>
+		
+<pre>
+push FooId	// code to trace call
+call TraceCall
+
+jmp Foo_Stub	// call the original function
+</pre>
+
+		<p>
+			In order for us to hook any exported API function, we cannot have a static implementation of the hook and the stub function for each possible API function provided in every single DLL mapped onto the process you are investigating. The stub and hook functions are dynamically created when a hook request for a function is received (and before any jmp instruction is inserted into the API function).
+		</p>
+
+		<p>For a similar technique implemented, see <a href="http://research.microsoft.com/sn/detours/" target="_blank">Microsoft's Detours project</a>.</p>
+		
+		<p class="footer"><a href="index.htm">To Index</a></p>
+	</div>
+</body>
+</html>

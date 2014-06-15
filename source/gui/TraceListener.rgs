@@ -1,0 +1,23 @@
+HKCR
+{
+	DP.TraceListener.1 = s 'TraceListener Class'
+	{
+		CLSID = s '{A115A87C-5C74-460E-9180-E394D2976CD0}'
+	}
+	DP.TraceListener = s 'TraceListener Class'
+	{
+		CLSID = s '{A115A87C-5C74-460E-9180-E394D2976CD0}'
+		CurVer = s 'DP.TraceListener.1'
+	}
+	NoRemove CLSID
+	{
+		ForceRemove {A115A87C-5C74-460E-9180-E394D2976CD0} = s 'TraceListener Class'
+		{
+			ProgID = s 'DP.TraceListener.1'
+			VersionIndependentProgID = s 'DP.TraceListener'
+			LocalServer32 = s '%MODULE%'
+			val AppID = s '{C4209E04-44A8-4CAB-A195-2C6D58ACF2D5}'
+			'TypeLib' = s '{2FFC201E-7E58-4133-A890-387438A47C10}'
+		}
+	}
+}
