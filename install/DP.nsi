@@ -54,13 +54,13 @@
 Section "Developer Playground" SecCopyUI
 
   SetOutPath "$INSTDIR"
-  File "DPHelper.dll"
+  ;File "DPHelper.dll"
   File "DPInfiltrator.dll"
   File "DP.exe"
   File "license.txt"	
   
   SetOutPath $INSTDIR\help
-  File /r "help\*.*"
+  ;File /r "help\*.*"
     
   ;Store install folder
   WriteRegStr HKCU "Software\${MUI_PRODUCT}" "" $INSTDIR
@@ -68,7 +68,7 @@ Section "Developer Playground" SecCopyUI
   ;Create uninstaller
   WriteUninstaller "$INSTDIR\Uninstall.exe"
   
-  RegDLL "$INSTDIR\DPHelper.dll"
+  ;RegDLL "$INSTDIR\DPHelper.dll"
 
 SectionEnd
 
@@ -82,7 +82,7 @@ SectionEnd
 
 ;Display the Finish header
 ;Insert this macro after the sections if you are not using a finish page
-!insertmacro MUI_SECTIONS_FINISHHEADER
+;!insertmacro MUI_SECTIONS_FINISHHEADER
 
 ;--------------------------------
 ;Descriptions
@@ -113,6 +113,6 @@ Section "Uninstall"
   DeleteRegKey /ifempty HKCU "Software\${MUI_PRODUCT}"
   
   ;Display the Finish header
-  !insertmacro MUI_UNFINISHHEADER
+  ;!insertmacro MUI_UNFINISHHEADER
 
 SectionEnd

@@ -20,17 +20,17 @@ void integrationTests();
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-  testDynamicHook();
-  testISC();
-  testDebugSymbols();
-  testStringParser();
-  testPipes();
-  testCOM();
-  testHash();
-  testDeadlockDetection();
-  testIPC();
+  //testDynamicHook();
+  //testISC();
+  //testDebugSymbols();
+  //testStringParser();
+  //testPipes();
+  //testCOM();
+  //testHash();
+  //testDeadlockDetection();
+  //testIPC();
 
-//  integrationTests();
+  //integrationTests();
 
   return s_unittest_success ? 0 : 1;
 }
