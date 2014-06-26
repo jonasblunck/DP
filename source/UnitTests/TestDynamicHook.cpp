@@ -90,7 +90,7 @@ namespace DpTests
 			StringFunction("text");
 		}
 
-		TEST_METHOD(NonStatic_WasInvoked)
+		TEST_METHOD(DynamicHook_NonStatic_WasInvoked)
 		{
 			m_parameters.clear();
 			m_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
@@ -112,7 +112,7 @@ namespace DpTests
 			Assert::IsTrue(m_listener.WasInvoked());			
 		}
 
-		TEST_METHOD(NonStatic_CorrectTrace)
+		TEST_METHOD(DynamicHook_NonStatic_CorrectTrace)
 		{
 			m_parameters.clear();
 			m_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
@@ -134,7 +134,7 @@ namespace DpTests
 			Assert::AreEqual("4422, 5533", m_listener.GetTrace());
 		}
 
-		TEST_METHOD(Unknown_WasInvoked)
+		TEST_METHOD(DynamicHook_Unknown_WasInvoked)
 		{
 			m_parameters.clear();
 			m_parameters.addParam(VT_EMPTY, ISC::PointerSpec::NoPtr);
@@ -150,7 +150,7 @@ namespace DpTests
 			Assert::IsTrue(m_listener.WasInvoked());
 		}	
 
-		TEST_METHOD(Unknown_CorrectId)
+		TEST_METHOD(DynamicHook_Unknown_CorrectId)
 		{
 			m_parameters.clear();
 			m_parameters.addParam(VT_EMPTY, ISC::PointerSpec::NoPtr);
@@ -166,7 +166,7 @@ namespace DpTests
 			Assert::AreEqual(m_hookId, m_listener.GetId());			
 		}
 
-		TEST_METHOD(Unknown_CorrectTrace)
+		TEST_METHOD(DynamicHook_Unknown_CorrectTrace)
 		{
 			m_parameters.clear();
 			m_parameters.addParam(VT_EMPTY, ISC::PointerSpec::NoPtr);
@@ -182,7 +182,7 @@ namespace DpTests
 			Assert::AreEqual("???", m_listener.GetTrace());
 		}
 
-		TEST_METHOD(IntsWithFunctionName_WasInvoked)
+		TEST_METHOD(DynamicHook_IntsWithFunctionName_WasInvoked)
 		{
 			m_parameters.clear();
 			m_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
@@ -197,7 +197,7 @@ namespace DpTests
 			Assert::IsTrue(m_listener.WasInvoked());														
 		}
 
-		TEST_METHOD(IntsWithFunctionName_CorrectId)
+		TEST_METHOD(DynamicHook_IntsWithFunctionName_CorrectId)
 		{
 			m_parameters.clear();
 			m_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
@@ -214,7 +214,7 @@ namespace DpTests
 			Assert::AreEqual(m_hookId, m_listener.GetId());
 		}
 
-		TEST_METHOD(IntsWithFunctionName_CorrectTrace)
+		TEST_METHOD(DynamicHook_IntsWithFunctionName_CorrectTrace)
 		{
 			m_parameters.clear();
 			m_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
@@ -229,7 +229,7 @@ namespace DpTests
 			Assert::AreEqual("IntFunction(100, 200)", m_listener.GetTrace());
 		}				
 
-		TEST_METHOD(Pointers_WasInvoked)
+		TEST_METHOD(DynamicHook_Pointers_WasInvoked)
 		{
 			m_parameters.clear();
 			m_parameters.addParam(VT_VOID, ISC::PointerSpec::Ptr);
@@ -247,7 +247,7 @@ namespace DpTests
 			Assert::IsTrue(m_listener.WasInvoked());			
 		}
 
-		TEST_METHOD(Pointers_CorrectId)
+		TEST_METHOD(DynamicHook_Pointers_CorrectId)
 		{
 			m_parameters.clear();
 			m_parameters.addParam(VT_VOID, ISC::PointerSpec::Ptr);
@@ -265,7 +265,7 @@ namespace DpTests
 			Assert::AreEqual(m_hookId, m_listener.GetId());			
 		}
 
-		TEST_METHOD(Pointers_CorrectTrace)
+		TEST_METHOD(DynamicHook_Pointers_CorrectTrace)
 		{
 			m_parameters.clear();
 			m_parameters.addParam(VT_VOID, ISC::PointerSpec::Ptr);
@@ -283,7 +283,7 @@ namespace DpTests
 			Assert::AreEqual("0x88776655, 0x00000000", m_listener.GetTrace());
 		}
 
-		TEST_METHOD(String_WasInvoked)
+		TEST_METHOD(DynamicHook_String_WasInvoked)
 		{
 			m_parameters.clear();
 			m_parameters.addParam(VT_LPSTR, ISC::PointerSpec::NoPtr);
@@ -299,7 +299,7 @@ namespace DpTests
 			Assert::IsTrue(m_listener.WasInvoked());
 		}
 
-		TEST_METHOD(String_CorrectId)
+		TEST_METHOD(DynamicHook_String_CorrectId)
 		{
 			m_parameters.clear();
 			m_parameters.addParam(VT_LPSTR, ISC::PointerSpec::NoPtr);
@@ -315,7 +315,7 @@ namespace DpTests
 			Assert::AreEqual(m_hookId, m_listener.GetId());			
 		}
 
-		TEST_METHOD(String_CorrectTrace)
+		TEST_METHOD(DynamicHook_String_CorrectTrace)
 		{
 			m_parameters.clear();
 			m_parameters.addParam(VT_LPSTR, ISC::PointerSpec::NoPtr);
@@ -331,7 +331,7 @@ namespace DpTests
 			Assert::AreEqual("\"stringie..\"", m_listener.GetTrace());
 		}
 
-		TEST_METHOD(CallThatInvokesOtherHookedFunctions)
+		TEST_METHOD(DynamicHook_CallThatInvokesOtherHookedFunctions)
 		{			
 			IntsWithFunctionNameCall(); // will make sure "IntFunction" is hooked
 			StringFunctionCall(); // will make sure "StringFunction" is hooked
@@ -351,7 +351,7 @@ namespace DpTests
 
 		// Context Tests - currently not passing
 		/*
-		TEST_METHOD(Context_NotHooked)
+		TEST_METHOD(DynamicHook_Context_NotHooked)
 		{
 			HookContext* context = 0;
 			m_parameters.clear();
@@ -362,7 +362,7 @@ namespace DpTests
 			Assert::AreEqual(false, CDynHooker::GetHookContext(TestDynamicHook::ContextTest, context));			
 		}
 
-		TEST_METHOD(Context_IsHooked)
+		TEST_METHOD(DynamicHook_Context_IsHooked)
 		{
 			HookContext* context = 0;
 			m_parameters.clear();
@@ -375,7 +375,7 @@ namespace DpTests
 			Assert::IsTrue(CDynHooker::GetHookContext(TestDynamicHook::ContextTest, context));
 		}
 
-		TEST_METHOD(Context_TwoParams)
+		TEST_METHOD(DynamicHook_Context_TwoParams)
 		{
 			HookContext* context = 0;
 			m_parameters.clear();
@@ -391,7 +391,7 @@ namespace DpTests
 		}
 
 		
-		TEST_METHOD(Context_FirstParamIsInt)
+		TEST_METHOD(DynamicHook_Context_FirstParamIsInt)
 		{
 			HookContext* context = 0;
 			m_parameters.clear();
@@ -406,7 +406,7 @@ namespace DpTests
 			Assert::AreEqual((SHORT)VT_INT, context->GetMethodInfo()->pParams[0].vtType);
 		}
 
-		TEST_METHOD(Context_SecondParamIs4ByteReal)
+		TEST_METHOD(DynamicHook_Context_SecondParamIs4ByteReal)
 		{
 			HookContext* context = 0;
 			m_parameters.clear();
@@ -421,7 +421,7 @@ namespace DpTests
 			Assert::AreEqual((SHORT)VT_INT, context->GetMethodInfo()->pParams[1].vtType);			
 		}
 
-		TEST_METHOD(Context_IsContextActive)
+		TEST_METHOD(DynamicHook_Context_IsContextActive)
 		{
 			HookContext* context = 0;
 			m_parameters.clear();

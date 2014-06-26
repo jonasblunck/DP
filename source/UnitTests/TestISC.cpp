@@ -4,46 +4,108 @@
 
 #import "..\..\Bin\UnitTests.tlb"  raw_interfaces_only, no_namespace
 
-void LoadTypeinformation()
+#include "CppUnitTest.h"
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+namespace DpTests
 {
-  CComPtr<ITypeLib> spTypeLib;
-  HRESULT hr = LoadTypeLibEx(CComBSTR("UnitTests.tlb"), REGKIND_REGISTER, &spTypeLib);
- 
-  DPUNIT_ISTRUE(spTypeLib.p != NULL);
-  DPUNIT_EQUAL(S_OK, hr);
+	TEST_CLASS(TestISC)
+	{
+		TEST_CLASS_INITIALIZE(Initialise)
+		{
+			CComPtr<ITypeLib> spTypeLib;
+			HRESULT hr = LoadTypeLibEx(CComBSTR("UnitTests.tlb"), REGKIND_REGISTER, &spTypeLib);			
 
-  ISC::GetISC().AddTypeLibrary(spTypeLib);
-}
+			ISC::GetISC().AddTypeLibrary(spTypeLib);
+		}
+		
+		TEST_METHOD(ISC_LoadTypeinformation_ComPointerIsNotNull)
+		{
+			CComPtr<ITypeLib> spTypeLib;
+			HRESULT hr = LoadTypeLibEx(CComBSTR("UnitTests.tlb"), REGKIND_REGISTER, &spTypeLib);
 
-void TestOutInterfaceHasCorrectIID()
-{
-  ISC::Interface* itf = ISC::GetISC().GetInterface(__uuidof(ITestInterface));
+			Assert::IsTrue(spTypeLib.p != NULL);
+		}
 
-  ISC::InterfaceMethod& m2 = itf->pMethods[12];
-  DPUNIT_STR_EQUAL("GetTestInterface2", m2.strName);
-  DPUNIT_ISTRUE(m2.pParams[0].riid == __uuidof(ITestInterface2));
-}
+		TEST_METHOD(ISC_LoadTypeinformation_HresultIsOk)
+		{
+			CComPtr<ITypeLib> spTypeLib;
+			HRESULT hr = LoadTypeLibEx(CComBSTR("UnitTests.tlb"), REGKIND_REGISTER, &spTypeLib);
+			
+			Assert::AreEqual(S_OK, hr);
+		}
 
-void TestLoadedTypelibContainsInterface()
-{
-  ISC::Interface* itf = ISC::GetISC().GetInterface(__uuidof(ITestInterface));
-  DPUNIT_INT_EQUAL(13, itf->nMethodCount); // count does not include base functions (QI, AddRef, Release)
+		TEST_METHOD(ISC_OutInterface_HasCorrectName)
+		{
+			ISC::Interface* itf = ISC::GetISC().GetInterface(__uuidof(ITestInterface));
 
-  ISC::InterfaceMethod& method = itf->pMethods[5];
+			ISC::InterfaceMethod& m2 = itf->pMethods[12];
 
-  DPUNIT_STR_EQUAL("MethodIntOut", method.strName);
-  DPUNIT_ISTRUE(ISC::PointerSpec::Ptr == method.pParams[0].pointerSpec);
-  DPUNIT_ISTRUE(VT_INT == method.pParams[0].vtType);
+			Assert::AreEqual("GetTestInterface2", m2.strName);
+		}
 
-  ISC::InterfaceMethod& m = itf->pMethods[0];
-  DPUNIT_STR_EQUAL("GetFooBarInterface", m.strName);
-  DPUNIT_ISTRUE(m.pParams[1].riid == __uuidof(IUnknown));
-}
+		TEST_METHOD(ISC_OutInterface_HasCorrectIID)
+		{
+			ISC::Interface* itf = ISC::GetISC().GetInterface(__uuidof(ITestInterface));
 
-void testISC()
-{
-  LoadTypeinformation();
+			ISC::InterfaceMethod& m2 = itf->pMethods[12];
 
-  TestLoadedTypelibContainsInterface();
-  TestOutInterfaceHasCorrectIID();
+			Assert::IsTrue(m2.pParams[0].riid == __uuidof(ITestInterface2));
+		}
+
+		TEST_METHOD(ISC_LoadedTypelib_Has13Methods)
+		{
+			ISC::Interface* itf = ISC::GetISC().GetInterface(__uuidof(ITestInterface));
+			Assert::AreEqual(13, (int)itf->nMethodCount); // count does not include base functions (QI, AddRef, Release)
+
+			ISC::InterfaceMethod& method = itf->pMethods[5];			
+		}
+
+		TEST_METHOD(ISC_LoadedTypelib_SixthMethodNameCorrect)
+		{
+			ISC::Interface* itf = ISC::GetISC().GetInterface(__uuidof(ITestInterface));			
+
+			ISC::InterfaceMethod& method = itf->pMethods[5];
+
+			Assert::AreEqual("MethodIntOut", method.strName);
+		}
+
+		TEST_METHOD(ISC_LoadedTypelib_SixthMethodFirstParamIsPointer)
+		{
+			ISC::Interface* itf = ISC::GetISC().GetInterface(__uuidof(ITestInterface));
+
+			ISC::InterfaceMethod& method = itf->pMethods[5];
+
+			Assert::IsTrue(ISC::PointerSpec::Ptr == method.pParams[0].pointerSpec);			
+		}
+
+		TEST_METHOD(ISC_LoadedTypelib_SixthMethodFirstParamIsInt)
+		{
+			ISC::Interface* itf = ISC::GetISC().GetInterface(__uuidof(ITestInterface));
+
+			ISC::InterfaceMethod& method = itf->pMethods[5];
+
+			Assert::IsTrue(VT_INT == method.pParams[0].vtType);
+			
+		}
+
+		TEST_METHOD(ISC_LoadedTypelib_FirstMethodInterfaceNameCorrect)
+		{
+			ISC::Interface* itf = ISC::GetISC().GetInterface(__uuidof(ITestInterface));
+
+			ISC::InterfaceMethod& m = itf->pMethods[0];
+
+			Assert::AreEqual("GetFooBarInterface", m.strName);
+		}
+
+		TEST_METHOD(ISC_LoadedTypelib_ContainsInterface)
+		{
+			ISC::Interface* itf = ISC::GetISC().GetInterface(__uuidof(ITestInterface));
+
+			ISC::InterfaceMethod& m = itf->pMethods[0];
+
+			Assert::IsTrue(m.pParams[1].riid == __uuidof(IUnknown));
+		}		
+	};
 }

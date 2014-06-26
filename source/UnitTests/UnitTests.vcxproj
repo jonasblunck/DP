@@ -132,7 +132,6 @@
     <ClCompile Include="TestISC.cpp" />
     <ClCompile Include="TestPipeClientAndServer.cpp" />
     <ClCompile Include="TestStringParser.cpp" />
-    <ClCompile Include="UnitTests.cpp" />
     <ClCompile Include="..\dlls\DPInfiltrator\CallStackParam.cpp" />
     <ClCompile Include="..\gui\DebugSymbols.cpp" />
     <ClCompile Include="..\dlls\DPInfiltrator\DynHooker.cpp" />

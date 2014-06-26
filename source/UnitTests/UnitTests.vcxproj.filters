@@ -36,9 +36,6 @@
     <ClCompile Include="TestStringParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\dlls\DPInfiltrator\CallStackParam.cpp">
       <Filter>SUT</Filter>
     </ClCompile>
