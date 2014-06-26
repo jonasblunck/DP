@@ -28,4 +28,6 @@ extern bool s_unittest_success;
 #include "GuidHelpers.h"
 #include "CS.h"
 
+class DebugSymbolsInstance;
+
 // TODO: reference additional headers your program requires here
