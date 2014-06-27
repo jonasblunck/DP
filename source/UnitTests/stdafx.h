@@ -28,6 +28,6 @@ extern bool s_unittest_success;
 #include "GuidHelpers.h"
 #include "CS.h"
 
-class DebugSymbolsInstance;
+#define DLL_LOCATION "c:\\dev\\c++\\dp\\source\\bin\\unittests.dll"
 
 // TODO: reference additional headers your program requires here

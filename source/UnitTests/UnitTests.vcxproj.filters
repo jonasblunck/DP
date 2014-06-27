@@ -83,6 +83,9 @@
     <ClInclude Include="FakeImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="DebugSymbolsTestClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Midl Include="interfaces.idl">

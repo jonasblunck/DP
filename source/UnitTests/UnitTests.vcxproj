@@ -138,6 +138,7 @@
     <ClCompile Include="..\dlls\DPInfiltrator\LogicalThreadMgr.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DebugSymbolsTestClass.h" />
     <ClInclude Include="FakeImpl.h" />
     <ClInclude Include="LocalListener.h" />
     <ClInclude Include="stdafx.h" />
