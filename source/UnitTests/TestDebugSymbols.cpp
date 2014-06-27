@@ -2,9 +2,9 @@
 #include "DebugSymbols.h"
 #include <map>
 #include "DebugSymbols.h"
+#include "DebugSymbolsTestClass.h"
 
 #include "CppUnitTest.h"
-#include "DebugSymbolsTestClass.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
