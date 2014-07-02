@@ -7,24 +7,24 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 TEST_CLASS(TestStringParser)
 {
-  TEST_METHOD(TestTrim_Tag)
+  TEST_METHOD(StringParser_Trim_Tag)
   {
     Assert::AreEqual("include this", StringParser::TrimString("about <p>include this</p> but", "<p>", "</p>"));    
   }
 
-  TEST_METHOD(TestTrim_NoTag)
+  TEST_METHOD(StringParser_Trim_NoTag)
   {
 	  Assert::AreEqual("find_this", StringParser::TrimString("nottag2find_thistag3", "tag2", "tag3"));
   }
 
-  TEST_METHOD(TestNextItem_Before_Stop1)
+  TEST_METHOD(StringParser_NextItem_Before_Stop1)
   {
     CString item = "text <stop> text2 <stop> text3 <stop>";
 
     Assert::AreEqual("text ", StringParser::Next(item, "<stop>"));
   }
 
-  TEST_METHOD(TestNextItem_After_Stop1)
+  TEST_METHOD(StringParser_NextItem_After_Stop1)
   {
 	  CString item = "text <stop> text2 <stop> text3 <stop>";
 
@@ -32,7 +32,7 @@ TEST_CLASS(TestStringParser)
 	  Assert::AreEqual(" text2 <stop> text3 <stop>", item);	 
   }
 
-  TEST_METHOD(TestNextItem_After_Stop2)
+  TEST_METHOD(StringParser_NextItem_After_Stop2)
   {
 	  CString item = "text <stop> text2 <stop> text3 <stop>";
 
@@ -41,7 +41,7 @@ TEST_CLASS(TestStringParser)
 	  Assert::AreEqual(" text2 ", StringParser::Next(item, "<stop>"));
   }
 
-  TEST_METHOD(TestNextItem_After_Stop3)
+  TEST_METHOD(StringParser_NextItem_After_Stop3)
   {
 	  CString item = "text <stop> text2 <stop> text3 <stop>";
 
@@ -52,7 +52,7 @@ TEST_CLASS(TestStringParser)
   }
 
 
-  TEST_METHOD(TestTrimThrowsOnNotFound)
+  TEST_METHOD(StringParser_TrimThrowsOnNotFound)
   {
     try
     {

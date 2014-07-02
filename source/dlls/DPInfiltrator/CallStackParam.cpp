@@ -28,8 +28,6 @@ inline bool CallStackParam::OnArgumentBOOL(void**& ppStackArgument, CString& rst
   return true;
 }
 
-
-
 inline bool CallStackParam::OnArgumentBSTR(void**& ppStackArgument, CString& rstrArgument) const
 {
   CString strArgument;

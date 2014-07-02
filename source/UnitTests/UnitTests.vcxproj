@@ -144,6 +144,7 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="TestAsserts.h" />
+    <ClInclude Include="PipesTestClass.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\dlls\chainhook\chainhook.vcxproj">
