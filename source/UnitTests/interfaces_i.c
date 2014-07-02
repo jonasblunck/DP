@@ -6,7 +6,7 @@
 
 
  /* File created by MIDL compiler version 8.00.0603 */
-/* at Fri Jun 27 09:59:09 2014
+/* at Wed Jul 02 23:04:39 2014
  */
 /* Compiler settings for interfaces.idl:
     Oicf, W1, Zp8, env=Win32 (32b run), target_arch=X86 8.00.0603 
