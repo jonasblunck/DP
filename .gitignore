@@ -5,3 +5,10 @@ source/DP.opensdf
 *.lib
 *.tlog
 .gitignore~
+*.pch
+*.log
+*.pdb
+*.exe
+*.ilk
+*.dll
+
