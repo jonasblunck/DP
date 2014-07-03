@@ -335,7 +335,7 @@ public:
 		Assert::AreEqual((int)S_OK, listener.GetReturnValue());
 	}
 
-	TEST_METHOD(TestLong_Correct_Trace)
+	TEST_METHOD(COM_Long_Correct_Trace)
 	{
 		LocalListener listener;
 		std::auto_ptr<FakeImpl> p;
@@ -354,7 +354,7 @@ public:
 		Assert::AreEqual("ITestInterface->MethodLong(12345678)", listener.GetTrace());
 	}
 
-	TEST_METHOD(TestFloat)
+	TEST_METHOD(COM_Float)
 	{
 		LocalListener listener;
 		std::auto_ptr<FakeImpl> p;

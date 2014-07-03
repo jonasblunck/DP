@@ -1,15 +1,32 @@
 #include "stdafx.h"
 #include "hash.h"
 
-void testHash()
+#include "CppUnitTest.h"
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+TEST_CLASS(testHash)
 {
   int a = 10;
   int b = 11;
 
-  DPUNIT_EQUAL(Hash(a, b), Hash(a, b));
-  DPUNIT_EQUAL(Hash(b, a), Hash(b, a));
+  TEST_METHOD(Hash_ab_Equal)
+  {
+	  Assert::AreEqual(Hash(a, b), Hash(a, b));
+  }
 
-  DPUNIT_EQUAL(Hash(a, a), Hash(a, a));
-  
-  DPUNIT_ISTRUE(Hash(a, b) != Hash(b, a));
-}
+  TEST_METHOD(Hash_ba_Equal)
+  {
+	  Assert::AreEqual(Hash(b, a), Hash(b, a));
+  }
+
+  TEST_METHOD(Hash_aa_Equal)
+  {
+	  Assert::AreEqual(Hash(a, a), Hash(a, a));
+  }
+
+  TEST_METHOD(Hash_ab_ba_NotEqual)
+  {
+	  Assert::AreNotEqual(Hash(a, b), Hash(b, a));
+  }
+};

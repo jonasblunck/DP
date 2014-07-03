@@ -63,7 +63,7 @@
     <ClCompile Include="TestHash.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IntegrationTests.cpp">
+    <ClCompile Include="TestIntegration.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -87,6 +87,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PipesTestClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IntegrationTests.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
