@@ -36,9 +36,6 @@
     <ClCompile Include="TestStringParser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="UnitTests.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\dlls\DPInfiltrator\CallStackParam.cpp">
       <Filter>SUT</Filter>
     </ClCompile>
@@ -66,7 +63,7 @@
     <ClCompile Include="TestHash.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IntegrationTests.cpp">
+    <ClCompile Include="TestIntegration.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -84,6 +81,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FakeImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugSymbolsTestClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PipesTestClass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IntegrationTests.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

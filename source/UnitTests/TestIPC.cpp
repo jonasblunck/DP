@@ -2,23 +2,61 @@
 #include "coms.h"
 #include "IPCHelper.h"
 
-void testEncodedTraceMessageCanBeDecoded()
+#include "CppUnitTest.h"
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+TEST_CLASS(testEncodedTraceMessageCanBeDecoded)
 {
-  int hookedFunctionId = 10;
-  int processId = 0xdead;
-  int returnValue = E_UNEXPECTED;
-  char* traceText = "this is the trace message";
+  TEST_METHOD(IPC_TraceMessage_Action)
+  {
+	  int hookedFunctionId = 10;
+	  int processId = 0xdead;
+	  int returnValue = E_UNEXPECTED;
+	  DPMessage* message;
+	  char* traceText = "this is the trace message";
 
-  DPMessage* message = IPCHelper::EncodeTraceMessage(hookedFunctionId, processId, returnValue, traceText);
+	  message = IPCHelper::EncodeTraceMessage(hookedFunctionId, processId, returnValue, traceText);
 
-  DPUNIT_EQUAL(enTrace, message->action);
-  DPUNIT_EQUAL(processId, message->traceMessage.pid);
-  DPUNIT_EQUAL(returnValue, message->traceMessage.returnValue);
-  DPUNIT_STR_EQUAL(traceText, IPCHelper::GetTraceMessageFromMessage(message));
+	  Assert::AreEqual((int)enTrace, (int)message->action);
+  }
 
-}
+  TEST_METHOD(IPC_TraceMessage_ProcessId)
+  {
+	  int hookedFunctionId = 10;
+	  int processId = 0xdead;
+	  int returnValue = E_UNEXPECTED;
+	  DPMessage* message;
+	  char* traceText = "this is the trace message";
 
-void testIPC()
-{
-  testEncodedTraceMessageCanBeDecoded();
-}
+	  message = IPCHelper::EncodeTraceMessage(hookedFunctionId, processId, returnValue, traceText);
+
+	  Assert::AreEqual(static_cast<DWORD>(processId), message->traceMessage.pid);
+  }
+
+  TEST_METHOD(IPC_TraceMessage_ReturnMessage)
+  {
+	  int hookedFunctionId = 10;
+	  int processId = 0xdead;
+	  int returnValue = E_UNEXPECTED;
+	  DPMessage* message;
+	  char* traceText = "this is the trace message";
+
+	  message = IPCHelper::EncodeTraceMessage(hookedFunctionId, processId, returnValue, traceText);
+
+	  Assert::AreEqual(returnValue, message->traceMessage.returnValue);
+  }
+
+  TEST_METHOD(IPC_TraceMessage_TraceText)
+  {
+	  int hookedFunctionId = 10;
+	  int processId = 0xdead;
+	  int returnValue = E_UNEXPECTED;
+	  DPMessage* message;
+	  char* traceText = "this is the trace message";
+
+	  message = IPCHelper::EncodeTraceMessage(hookedFunctionId, processId, returnValue, traceText);
+
+	  Assert::AreEqual(traceText, IPCHelper::GetTraceMessageFromMessage(message));
+  }
+};

@@ -1,83 +1,149 @@
 #include "stdafx.h"
 #include "DebugSymbols.h"
 #include <map>
+#include "DebugSymbols.h"
+#include "DebugSymbolsTestClass.h"
 
-class TestDebugSymbols : public IEnumerateDebugSymbolsCallback
+#include "CppUnitTest.h"
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+TEST_CLASS(TestDebugSymbols)
 {
-  std::map<CString, CString> m_symbols;
+	DebugSymbolsTestClass debugSymbolsTest;
 
-  void Setup()
-  {
-    // read symbols for my own test code!
-    CString filename; 
-    ::GetModuleFileName(0, filename.GetBuffer(1024), 1024); filename.ReleaseBuffer();
+	TEST_CLASS_INITIALIZE(Initialise)
+	{
+		
+	}
 
-    CDebugSymbols symbolEngine;
+	TEST_METHOD(DebugSymbols_TestBasicTypes_IntFunction_Find)
+	{
+		std::map<CString, CString>::iterator i = debugSymbolsTest.m_symbols.end();
+		i = debugSymbolsTest.m_symbols.find(_T("TestData::IntFunction"));
 
-    symbolEngine.Initialize();
-    symbolEngine.EnumerateSymbols((LPCTSTR)filename, this);
-  }
+		Assert::IsTrue(i != debugSymbolsTest.m_symbols.end());		
+	}
 
-  // IEnumerateDebugSymbolsCallback callback
-  BOOL OnSymbol(LPCTSTR pszSymbolName, DWORD dwOrdinal, DWORD dwRVA, LPCTSTR pszParameters)
-  {
-    CString name(pszSymbolName);
-    CString params(pszParameters);
+	TEST_METHOD(DebugSymbols_TestBasicTypes_IntFunction_Parameters)
+	{
+		std::map<CString, CString>::iterator i = debugSymbolsTest.m_symbols.end();
+		i = debugSymbolsTest.m_symbols.find(_T("TestData::IntFunction"));
 
-    m_symbols.insert(std::map<CString, CString>::value_type(name, params));
+		Assert::AreEqual("INT, INT, INT", i->second);		
+	}
 
-    return TRUE;
-  }
+	TEST_METHOD(DebugSymbols_TestBasicTypes_LongFunction_Find)
+	{
+		std::map<CString, CString>::iterator i = debugSymbolsTest.m_symbols.end();
+		i = debugSymbolsTest.m_symbols.find(_T("TestData::LongFunction"));
 
-  //
-  // test functions start here
-  //
-  void TestBasicTypes()
-  {
-    std::map<CString, CString>::const_iterator i = m_symbols.end();
+		Assert::IsTrue(i != debugSymbolsTest.m_symbols.end());		
+	}
 
-    DPUNIT_ISTRUE((i = m_symbols.find(_T("TestData::IntFunction"))) != m_symbols.end());
-    DPUNIT_STR_EQUAL("INT, INT, INT", i->second);
+	TEST_METHOD(DebugSymbols_TestBasicTypes_LongFunction_Parameters)
+	{
+		std::map<CString, CString>::iterator i = debugSymbolsTest.m_symbols.end();
 
-    DPUNIT_ISTRUE((i = m_symbols.find(_T("TestData::LongFunction"))) != m_symbols.end());
-    DPUNIT_STR_EQUAL("LONG, LONG", i->second);
+		i = debugSymbolsTest.m_symbols.find(_T("TestData::LongFunction"));
 
-    DPUNIT_ISTRUE((i = m_symbols.find(_T("TestData::StringFunction"))) != m_symbols.end());
-    DPUNIT_STR_EQUAL("CHAR*", i->second);
+		Assert::AreEqual("LONG, LONG", i->second);				
+	}
 
-    DPUNIT_ISTRUE((i = m_symbols.find(_T("TestData::CharFunction"))) != m_symbols.end());
-    DPUNIT_STR_EQUAL("CHAR", i->second);
+	TEST_METHOD(DebugSymbols_TestBasicTypes_StringFunction_Find)
+	{
+		std::map<CString, CString>::iterator i = debugSymbolsTest.m_symbols.end();
+		i = debugSymbolsTest.m_symbols.find(_T("TestData::StringFunction"));
 
-    DPUNIT_ISTRUE((i = m_symbols.find(_T("TestData::DwordPtrFunction"))) != m_symbols.end());
-    DPUNIT_STR_EQUAL("DWORD*", i->second);
+		Assert::IsTrue(i != debugSymbolsTest.m_symbols.end());		
+	}
 
-    DPUNIT_ISTRUE((i = m_symbols.find(_T("TestData::Mixed"))) != m_symbols.end());
-    DPUNIT_STR_EQUAL("DWORD*, CHAR*, INT", i->second);
-  }
+	TEST_METHOD(DebugSymbols_TestBasicTypes_StringFunction_Parameters)
+	{
+		std::map<CString, CString>::iterator i = debugSymbolsTest.m_symbols.end();
+		i = debugSymbolsTest.m_symbols.find(_T("TestData::StringFunction"));
 
-  void TestPointers()
-  {
-    std::map<CString, CString>::const_iterator i = m_symbols.end();
+		Assert::AreEqual("CHAR*", i->second);		
+	}
 
-    DPUNIT_ISTRUE((i = m_symbols.find(_T("TestData::PassingReference"))) != m_symbols.end());
-    DPUNIT_STR_EQUAL("VOID*", i->second);
+	TEST_METHOD(DebugSymbols_TestBasicTypes_CharFunction_Find)
+	{
+		std::map<CString, CString>::iterator i = debugSymbolsTest.m_symbols.end();
+		i = debugSymbolsTest.m_symbols.find(_T("TestData::CharFunction"));
 
-    DPUNIT_ISTRUE((i = m_symbols.find(_T("TestData::PointerToPointer"))) != m_symbols.end());
-    DPUNIT_STR_EQUAL("VOID**", i->second);
-  }
+		Assert::IsTrue(i != debugSymbolsTest.m_symbols.end());		
+	}
 
-public:
-  void Test()
-  {
-    Setup();
-    TestBasicTypes();
-    TestPointers();
-  }
+	TEST_METHOD(DebugSymbols_TestBasicTypes_CharFunction_Parameters)
+	{
+		std::map<CString, CString>::iterator i = debugSymbolsTest.m_symbols.end();
+		i = debugSymbolsTest.m_symbols.find(_T("TestData::CharFunction"));
+
+		Assert::AreEqual("CHAR", i->second);		
+	}
+
+	TEST_METHOD(DebugSymbols_TestBasicTypes_DwordPtrFunction_Find)
+	{
+		std::map<CString, CString>::iterator i = debugSymbolsTest.m_symbols.end();
+		i = debugSymbolsTest.m_symbols.find(_T("TestData::DwordPtrFunction"));
+
+		Assert::IsTrue(i != debugSymbolsTest.m_symbols.end());		
+	}
+
+	TEST_METHOD(DebugSymbols_TestBasicTypes_DwordPtrFunction_Parameters)
+	{
+		std::map<CString, CString>::iterator i = debugSymbolsTest.m_symbols.end();
+		i = debugSymbolsTest.m_symbols.find(_T("TestData::DwordPtrFunction"));
+
+		Assert::AreEqual("DWORD*", i->second);		
+	}
+
+	TEST_METHOD(DebugSymbols_TestBasicTypes_MixedFunction_Find)
+	{
+		std::map<CString, CString>::iterator i = debugSymbolsTest.m_symbols.end();
+		i = debugSymbolsTest.m_symbols.find(_T("TestData::Mixed"));
+
+		Assert::IsTrue(i != debugSymbolsTest.m_symbols.end());		
+	}
+
+	TEST_METHOD(DebugSymbols_TestBasicTypes_MixedFunction_Parameters)
+	{
+		std::map<CString, CString>::iterator i = debugSymbolsTest.m_symbols.end();
+		i = debugSymbolsTest.m_symbols.find(_T("TestData::Mixed"));
+
+		Assert::AreEqual("DWORD*, CHAR*, INT", i->second);		
+	}
+
+	TEST_METHOD(DebugSymbols_TestPointers_PassingReference_Find)
+	{
+		std::map<CString, CString>::iterator i = debugSymbolsTest.m_symbols.end();
+		i = debugSymbolsTest.m_symbols.find(_T("TestData::PassingReference"));
+
+		Assert::IsTrue(i != debugSymbolsTest.m_symbols.end());
+	}
+
+	TEST_METHOD(DebugSymbols_TestPointers_PassingReference_Parameters)
+	{
+		std::map<CString, CString>::iterator i = debugSymbolsTest.m_symbols.end();
+		i = debugSymbolsTest.m_symbols.find(_T("TestData::PassingReference"));
+
+		Assert::AreEqual("VOID*", i->second);
+	}
+
+	TEST_METHOD(DebugSymbols_TestBasicTypes_PointerToPointer_Find)
+	{
+		std::map<CString, CString>::iterator i = debugSymbolsTest.m_symbols.end();
+		i = debugSymbolsTest.m_symbols.find(_T("TestData::PointerToPointer"));
+
+		Assert::IsTrue(i != debugSymbolsTest.m_symbols.end());
+	}
+
+	TEST_METHOD(DebugSymbols_TestBasicTypes_PointerToPointer_Parameters)
+	{
+		std::map<CString, CString>::iterator i = debugSymbolsTest.m_symbols.end();
+		i = debugSymbolsTest.m_symbols.find(_T("TestData::PointerToPointer"));
+
+		Assert::AreEqual("VOID**", i->second);
+	}	
 };
-
-void testDebugSymbols()
-{
-  TestDebugSymbols test;
-  test.Test();
-}
-
+	

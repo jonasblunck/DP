@@ -28,4 +28,5 @@ extern bool s_unittest_success;
 #include "GuidHelpers.h"
 #include "CS.h"
 
-// TODO: reference additional headers your program requires here
+#define DLL_LOCATION "c:\\dev\\c++\\dp\\source\\bin\\unittests.dll"
+

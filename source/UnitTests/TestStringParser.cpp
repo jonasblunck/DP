@@ -1,27 +1,58 @@
-
 #include "stdafx.h"
 #include "StringParser.h"
 
-class TestStringParser
+#include "CppUnitTest.h"
+
+using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+
+TEST_CLASS(TestStringParser)
 {
-  void TestTrim()
+  TEST_METHOD(StringParser_Trim_Tag)
   {
-    DPUNIT_STR_EQUAL("include this", StringParser::TrimString("about <p>include this</p> but", "<p>", "</p>"));
-    DPUNIT_STR_EQUAL("find_this", StringParser::TrimString("nottag2find_thistag3", "tag2", "tag3"));
+    Assert::AreEqual("include this", StringParser::TrimString("about <p>include this</p> but", "<p>", "</p>"));    
   }
 
-  void TestNextItem()
+  TEST_METHOD(StringParser_Trim_NoTag)
+  {
+	  Assert::AreEqual("find_this", StringParser::TrimString("nottag2find_thistag3", "tag2", "tag3"));
+  }
+
+  TEST_METHOD(StringParser_NextItem_Before_Stop1)
   {
     CString item = "text <stop> text2 <stop> text3 <stop>";
 
-    DPUNIT_STR_EQUAL("text ", StringParser::Next(item, "<stop>"));
-    DPUNIT_STR_EQUAL(" text2 <stop> text3 <stop>", item);
-    DPUNIT_STR_EQUAL(" text2 ", StringParser::Next(item, "<stop>"));
-    DPUNIT_STR_EQUAL(" text3 ", StringParser::Next(item, "<stop>"));
-    DPUNIT_STR_EQUAL("", item);
+    Assert::AreEqual("text ", StringParser::Next(item, "<stop>"));
   }
 
-  void TestTrimThrowsOnNotFound()
+  TEST_METHOD(StringParser_NextItem_After_Stop1)
+  {
+	  CString item = "text <stop> text2 <stop> text3 <stop>";
+
+	  StringParser::Next(item, "<stop>");
+	  Assert::AreEqual(" text2 <stop> text3 <stop>", item);	 
+  }
+
+  TEST_METHOD(StringParser_NextItem_After_Stop2)
+  {
+	  CString item = "text <stop> text2 <stop> text3 <stop>";
+
+	  StringParser::Next(item, "<stop>");
+
+	  Assert::AreEqual(" text2 ", StringParser::Next(item, "<stop>"));
+  }
+
+  TEST_METHOD(StringParser_NextItem_After_Stop3)
+  {
+	  CString item = "text <stop> text2 <stop> text3 <stop>";
+
+	  StringParser::Next(item, "<stop>");
+	  StringParser::Next(item, "<stop>");
+	  
+	  Assert::AreEqual(" text3 ", StringParser::Next(item, "<stop>"));	  
+  }
+
+
+  TEST_METHOD(StringParser_TrimThrowsOnNotFound)
   {
     try
     {
@@ -29,27 +60,11 @@ class TestStringParser
 
       StringParser::TrimString(item, "tag1", "tag2");
 
-      DPUNIT_ISTRUE(FALSE);
+      Assert::IsTrue(FALSE);
     }
     catch(const StringParserException&)
     {
-      DPUNIT_ISTRUE(TRUE);
+      Assert::IsTrue(TRUE);
     }
   }
-
-public:
-  void Test()
-  {
-    TestTrim();
-    TestTrimThrowsOnNotFound();
-    TestNextItem();
-  }
 };
-
-void testStringParser()
-{
-  TestStringParser tester;
-  tester.Test();
-
-
-}
