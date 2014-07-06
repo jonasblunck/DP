@@ -11,4 +11,4 @@ The idea of Developer Playground is simple: Allow hooking of arbitrary processes
 Download
 --------
 
-The current release is available in the [GitHub Releases section](/releases/tag/v1.1-alpha.1)
+The current release is available in the [GitHub Releases section](../../releases/tag/v1.1-alpha.1)
