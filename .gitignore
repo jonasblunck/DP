@@ -18,3 +18,11 @@ source/DP.opensdf
 *_h.h
 *_i.c
 *_p.c
+source/UnitTests/interfaces_h.h
+source/UnitTests/interfaces_i.c
+source/UnitTests/interfaces_p.c
+source/bin/*
+source/gui/DP.tlb
+source/gui/DP_i.c
+source/gui/DP_p.c
+
