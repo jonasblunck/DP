@@ -1,8 +1,3 @@
-//{{NO_DEPENDENCIES}}
-// Microsoft Visual C++ generated include file.
-// Used by ADO101.rc
-//
-
 #define IDS_APP_TITLE			103
 
 // Next default values for new objects
