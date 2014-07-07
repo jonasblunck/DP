@@ -128,6 +128,7 @@
     <ClCompile Include="TestDynamicHook.cpp" />
     <ClCompile Include="TestHash.cpp" />
     <ClCompile Include="TestIntegration.cpp" />
+    <ClCompile Include="TestIntegrationAdo.cpp" />
     <ClCompile Include="TestIPC.cpp" />
     <ClCompile Include="TestISC.cpp" />
     <ClCompile Include="TestPipeClientAndServer.cpp" />
