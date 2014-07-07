@@ -1,4 +1,3 @@
-source/UnitTests/interface_*.*
 source/DP.sdf
 source/DP.opensdf
 *.obj
