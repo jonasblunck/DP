@@ -45,13 +45,18 @@ public:
 
 	BOOL StartTestApp()
 	{
+		return StartTestApp("TestApp.exe");
+	}
+
+	BOOL StartTestApp(LPSTR appName)
+	{
 		STARTUPINFO si;
 		PROCESS_INFORMATION pi;
 		memset(&si, 0, sizeof(si));
 		memset(&pi, 0, sizeof(PROCESS_INFORMATION));
 		si.cb = sizeof(STARTUPINFO);
 
-		BOOL started = ::CreateProcess(NULL, "TestApp.exe", NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, &si, &pi);
+		BOOL started = ::CreateProcess(NULL, appName, NULL, NULL, TRUE, CREATE_NO_WINDOW, NULL, NULL, &si, &pi);
 
 		m_testApp = pi.hProcess;
 
@@ -65,7 +70,7 @@ public:
 
 	void InitIpc()
 	{
-		m_ipc.Initialize(this);		
+		m_ipc.Initialize(this);
 	}
 
 	void UnInitIpc()
