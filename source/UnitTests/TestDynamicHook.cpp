@@ -10,26 +10,24 @@
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
+static CDynHooker s_hookManager;
+static ISC::InterfaceMethod s_parameters;
+static LocalListener s_listener;
+
 namespace DpTests
 {
 	TEST_CLASS(TestDynamicHook)
 	{
 	private:
 
-		CDynHooker m_hookManager;
-		LocalListener m_listener;
-		ISC::InterfaceMethod m_parameters;
 		long m_hookId;
-
+		
 		void IntsWithFunctionNameCall()
 		{
-			m_parameters.clear();
-			m_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
-			m_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
-			m_listener.Reset();
-
-			m_hookManager.InstallDynamicHook(
-				TestDynamicHook::IntFunction, "IntFunction", &m_parameters, &m_listener);
+			s_parameters.clear();
+			s_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
+			s_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
+			s_listener.Reset();
 
 			m_hookId = (long)TestDynamicHook::IntFunction;
 
@@ -38,19 +36,48 @@ namespace DpTests
 
 		void StringFunctionCall()
 		{
-			m_parameters.clear();
-			m_parameters.addParam(VT_LPSTR, ISC::PointerSpec::NoPtr);
-			m_listener.Reset();
-
-			m_hookManager.InstallDynamicHook
-				(TestDynamicHook::StringFunction, NULL, &m_parameters, &m_listener);
+			s_parameters.clear();
+			s_parameters.addParam(VT_LPSTR, ISC::PointerSpec::NoPtr);
+			s_listener.Reset();
 
 			m_hookId = (long)TestDynamicHook::StringFunction;
 
 			TestDynamicHook::StringFunction("stringie..");
 		}
+		
 
+		TEST_CLASS_INITIALIZE(InitializeHooks)
+		{
+			s_hookManager.InstallDynamicHook(
+				TestDynamicHook::IntFunction, "IntFunction", &s_parameters, &s_listener);
+
+			s_hookManager.InstallDynamicHook(
+				TestDynamicHook::StringFunction, "StringFunction", &s_parameters, &s_listener);
+
+			s_hookManager.InstallDynamicHook(
+				TestDynamicHook::UnknownFunction, NULL, &s_parameters, &s_listener);
+
+			s_hookManager.InstallDynamicHook(
+				TestDynamicHook::PointerFunction, NULL, &s_parameters, &s_listener);
+
+			LPVOID address = NULL;
+
+			__asm
+			{
+				mov eax, TestDynamicHook::NonStatic
+				mov address, eax
+			}
+
+			s_hookManager.InstallDynamicHook(address, NULL, &s_parameters, &s_listener, true);
+
+		}
+		
 	public:
+
+		TestDynamicHook()
+		{
+			InitializeHooks();
+		}
 		
 		static void __stdcall IntFunction(int i1, int i2)
 		{
@@ -92,243 +119,187 @@ namespace DpTests
 
 		TEST_METHOD(DynamicHook_NonStatic_WasInvoked)
 		{
-			m_parameters.clear();
-			m_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
-			m_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
-			m_listener.Reset();
-
-			LPVOID address = NULL;
-
-			__asm
-			{
-				mov eax, TestDynamicHook::NonStatic
-					mov address, eax
-			}
-
-			m_hookManager.InstallDynamicHook(address, NULL, &m_parameters, &m_listener, true);
+			s_parameters.clear();
+			s_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
+			s_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
+			s_listener.Reset();
 
 			NonStatic(4422, 5533); // call the hooked function
 
-			Assert::IsTrue(m_listener.WasInvoked());			
+			Assert::IsTrue(s_listener.WasInvoked());			
 		}
 
 		TEST_METHOD(DynamicHook_NonStatic_CorrectTrace)
 		{
-			m_parameters.clear();
-			m_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
-			m_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
-			m_listener.Reset();
-
-			LPVOID address = NULL;
-
-			__asm
-			{
-				mov eax, TestDynamicHook::NonStatic
-					mov address, eax
-			}
-
-			m_hookManager.InstallDynamicHook(address, NULL, &m_parameters, &m_listener, true);
+			s_parameters.clear();
+			s_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
+			s_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
+			s_listener.Reset();
 
 			NonStatic(4422, 5533); // call the hooked function
 			
-			Assert::AreEqual("4422, 5533", m_listener.GetTrace());
+			Assert::AreEqual("4422, 5533", s_listener.GetTrace());
 		}
 
 		TEST_METHOD(DynamicHook_Unknown_WasInvoked)
 		{
-			m_parameters.clear();
-			m_parameters.addParam(VT_EMPTY, ISC::PointerSpec::NoPtr);
-			m_listener.Reset();
-
-			m_hookManager.InstallDynamicHook(
-				TestDynamicHook::UnknownFunction, NULL, &m_parameters, &m_listener);
+			s_parameters.clear();
+			s_parameters.addParam(VT_EMPTY, ISC::PointerSpec::NoPtr);
+			s_listener.Reset();
 
 			m_hookId = (long)TestDynamicHook::UnknownFunction;
 
 			TestDynamicHook::UnknownFunction();
 
-			Assert::IsTrue(m_listener.WasInvoked());
+			Assert::IsTrue(s_listener.WasInvoked());
 		}	
 
 		TEST_METHOD(DynamicHook_Unknown_CorrectId)
 		{
-			m_parameters.clear();
-			m_parameters.addParam(VT_EMPTY, ISC::PointerSpec::NoPtr);
-			m_listener.Reset();
-
-			m_hookManager.InstallDynamicHook(
-				TestDynamicHook::UnknownFunction, NULL, &m_parameters, &m_listener);
+			s_parameters.clear();
+			s_parameters.addParam(VT_EMPTY, ISC::PointerSpec::NoPtr);
+			s_listener.Reset();
 
 			m_hookId = (long)TestDynamicHook::UnknownFunction;
 
 			TestDynamicHook::UnknownFunction();
 			
-			Assert::AreEqual(m_hookId, m_listener.GetId());			
+			Assert::AreEqual(m_hookId, s_listener.GetId());			
 		}
 
 		TEST_METHOD(DynamicHook_Unknown_CorrectTrace)
 		{
-			m_parameters.clear();
-			m_parameters.addParam(VT_EMPTY, ISC::PointerSpec::NoPtr);
-			m_listener.Reset();
-
-			m_hookManager.InstallDynamicHook(
-				TestDynamicHook::UnknownFunction, NULL, &m_parameters, &m_listener);
+			s_parameters.clear();
+			s_parameters.addParam(VT_EMPTY, ISC::PointerSpec::NoPtr);
+			s_listener.Reset();
 
 			m_hookId = (long)TestDynamicHook::UnknownFunction;
 
 			TestDynamicHook::UnknownFunction();
 
-			Assert::AreEqual("???", m_listener.GetTrace());
+			Assert::AreEqual("???", s_listener.GetTrace());
 		}
 
 		TEST_METHOD(DynamicHook_IntsWithFunctionName_WasInvoked)
 		{
-			m_parameters.clear();
-			m_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
-			m_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
-			m_listener.Reset();
-
-			m_hookManager.InstallDynamicHook(
-				TestDynamicHook::IntFunction, "IntFunction", &m_parameters, &m_listener);			
+			s_parameters.clear();
+			s_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
+			s_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
+			s_listener.Reset();			
 
 			TestDynamicHook::IntFunction(100, 200);
 			
-			Assert::IsTrue(m_listener.WasInvoked());														
+			Assert::IsTrue(s_listener.WasInvoked());														
 		}
 
 		TEST_METHOD(DynamicHook_IntsWithFunctionName_CorrectId)
 		{
-			m_parameters.clear();
-			m_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
-			m_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
-			m_listener.Reset();
-
-			m_hookManager.InstallDynamicHook(
-				TestDynamicHook::IntFunction, "IntFunction", &m_parameters, &m_listener);
+			s_parameters.clear();
+			s_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
+			s_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
+			s_listener.Reset();
 
 			m_hookId = (long)TestDynamicHook::IntFunction;
 
 			TestDynamicHook::IntFunction(100, 200);
 			
-			Assert::AreEqual(m_hookId, m_listener.GetId());
+			Assert::AreEqual(m_hookId, s_listener.GetId());
 		}
 
 		TEST_METHOD(DynamicHook_IntsWithFunctionName_CorrectTrace)
 		{
-			m_parameters.clear();
-			m_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
-			m_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
-			m_listener.Reset();
-
-			m_hookManager.InstallDynamicHook(
-				TestDynamicHook::IntFunction, "IntFunction", &m_parameters, &m_listener);
+			s_parameters.clear();
+			s_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
+			s_parameters.addParam(VT_INT, ISC::PointerSpec::NoPtr);
+			s_listener.Reset();
 
 			TestDynamicHook::IntFunction(100, 200);				
 			
-			Assert::AreEqual("IntFunction(100, 200)", m_listener.GetTrace());
+			Assert::AreEqual("IntFunction(100, 200)", s_listener.GetTrace());
 		}				
 
 		TEST_METHOD(DynamicHook_Pointers_WasInvoked)
 		{
-			m_parameters.clear();
-			m_parameters.addParam(VT_VOID, ISC::PointerSpec::Ptr);
-			m_parameters.addParam(VT_VOID, ISC::PointerSpec::Ptr);
+			s_parameters.clear();
+			s_parameters.addParam(VT_VOID, ISC::PointerSpec::Ptr);
+			s_parameters.addParam(VT_VOID, ISC::PointerSpec::Ptr);
 
-			m_listener.Reset();
-
-			m_hookManager.InstallDynamicHook
-				(TestDynamicHook::PointerFunction, NULL, &m_parameters, &m_listener);
+			s_listener.Reset();
 
 			m_hookId = (long)TestDynamicHook::PointerFunction;
 
 			TestDynamicHook::PointerFunction((LPVOID)0x88776655, (LPVOID)0x00000000);
 			
-			Assert::IsTrue(m_listener.WasInvoked());			
+			Assert::IsTrue(s_listener.WasInvoked());			
 		}
 
 		TEST_METHOD(DynamicHook_Pointers_CorrectId)
 		{
-			m_parameters.clear();
-			m_parameters.addParam(VT_VOID, ISC::PointerSpec::Ptr);
-			m_parameters.addParam(VT_VOID, ISC::PointerSpec::Ptr);
+			s_parameters.clear();
+			s_parameters.addParam(VT_VOID, ISC::PointerSpec::Ptr);
+			s_parameters.addParam(VT_VOID, ISC::PointerSpec::Ptr);
 
-			m_listener.Reset();
-
-			m_hookManager.InstallDynamicHook
-				(TestDynamicHook::PointerFunction, NULL, &m_parameters, &m_listener);
+			s_listener.Reset();
 
 			m_hookId = (long)TestDynamicHook::PointerFunction;
 
 			TestDynamicHook::PointerFunction((LPVOID)0x88776655, (LPVOID)0x00000000);
 						
-			Assert::AreEqual(m_hookId, m_listener.GetId());			
+			Assert::AreEqual(m_hookId, s_listener.GetId());			
 		}
 
 		TEST_METHOD(DynamicHook_Pointers_CorrectTrace)
 		{
-			m_parameters.clear();
-			m_parameters.addParam(VT_VOID, ISC::PointerSpec::Ptr);
-			m_parameters.addParam(VT_VOID, ISC::PointerSpec::Ptr);
+			s_parameters.clear();
+			s_parameters.addParam(VT_VOID, ISC::PointerSpec::Ptr);
+			s_parameters.addParam(VT_VOID, ISC::PointerSpec::Ptr);
 
-			m_listener.Reset();
-
-			m_hookManager.InstallDynamicHook
-				(TestDynamicHook::PointerFunction, NULL, &m_parameters, &m_listener);
+			s_listener.Reset();
 
 			m_hookId = (long)TestDynamicHook::PointerFunction;
 
 			TestDynamicHook::PointerFunction((LPVOID)0x88776655, (LPVOID)0x00000000);
 						
-			Assert::AreEqual("0x88776655, 0x00000000", m_listener.GetTrace());
+			Assert::AreEqual("0x88776655, 0x00000000", s_listener.GetTrace());
 		}
 
 		TEST_METHOD(DynamicHook_String_WasInvoked)
 		{
-			m_parameters.clear();
-			m_parameters.addParam(VT_LPSTR, ISC::PointerSpec::NoPtr);
-			m_listener.Reset();
-
-			m_hookManager.InstallDynamicHook
-				(TestDynamicHook::StringFunction, NULL, &m_parameters, &m_listener);
+			s_parameters.clear();
+			s_parameters.addParam(VT_LPSTR, ISC::PointerSpec::NoPtr);
+			s_listener.Reset();
 
 			m_hookId = (long)TestDynamicHook::StringFunction;
 
 			TestDynamicHook::StringFunction("stringie..");
 			
-			Assert::IsTrue(m_listener.WasInvoked());
+			Assert::IsTrue(s_listener.WasInvoked());
 		}
 
 		TEST_METHOD(DynamicHook_String_CorrectId)
 		{
-			m_parameters.clear();
-			m_parameters.addParam(VT_LPSTR, ISC::PointerSpec::NoPtr);
-			m_listener.Reset();
-
-			m_hookManager.InstallDynamicHook
-				(TestDynamicHook::StringFunction, NULL, &m_parameters, &m_listener);
+			s_parameters.clear();
+			s_parameters.addParam(VT_LPSTR, ISC::PointerSpec::NoPtr);
+			s_listener.Reset();
 
 			m_hookId = (long)TestDynamicHook::StringFunction;
 
 			TestDynamicHook::StringFunction("stringie..");
 						
-			Assert::AreEqual(m_hookId, m_listener.GetId());			
+			Assert::AreEqual(m_hookId, s_listener.GetId());			
 		}
 
 		TEST_METHOD(DynamicHook_String_CorrectTrace)
 		{
-			m_parameters.clear();
-			m_parameters.addParam(VT_LPSTR, ISC::PointerSpec::NoPtr);
-			m_listener.Reset();
-
-			m_hookManager.InstallDynamicHook
-				(TestDynamicHook::StringFunction, NULL, &m_parameters, &m_listener);
+			s_parameters.clear();
+			s_parameters.addParam(VT_LPSTR, ISC::PointerSpec::NoPtr);
+			s_listener.Reset();
 
 			m_hookId = (long)TestDynamicHook::StringFunction;
 
 			TestDynamicHook::StringFunction("stringie..");
 			
-			Assert::AreEqual("\"stringie..\"", m_listener.GetTrace());
+			Assert::AreEqual("StringFunction(\"stringie..\")", s_listener.GetTrace());
 		}
 
 		TEST_METHOD(DynamicHook_CallThatInvokesOtherHookedFunctions)
@@ -336,17 +307,17 @@ namespace DpTests
 			IntsWithFunctionNameCall(); // will make sure "IntFunction" is hooked
 			StringFunctionCall(); // will make sure "StringFunction" is hooked
 
-			m_parameters.clear();
-			m_listener.Reset();
+			s_parameters.clear();
+			s_listener.Reset();
 
-			m_hookManager.InstallDynamicHook
-				(TestDynamicHook::CallOtherHookedFunctions, "CallOtherHookedFunctions", &m_parameters, &m_listener);
+			s_hookManager.InstallDynamicHook
+				(TestDynamicHook::CallOtherHookedFunctions, "CallOtherHookedFunctions", &s_parameters, &s_listener);
 
 			m_hookId = (long)TestDynamicHook::CallOtherHookedFunctions;
 
 			TestDynamicHook::CallOtherHookedFunctions();
 
-			Assert::AreEqual("CallOtherHookedFunctions()", m_listener.GetTrace());
+			Assert::AreEqual("CallOtherHookedFunctions()", s_listener.GetTrace());
 		}
 
 		// Context Tests - currently not passing

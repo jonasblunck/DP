@@ -10,12 +10,10 @@ public:
 	DebugSymbolsTestClass()
 	{
 		// read symbols for my own test code!
-		CString filename = DLL_LOCATION;
-
 		CDebugSymbols symbolEngine;
 
 		symbolEngine.Initialize();
-		symbolEngine.EnumerateSymbols((LPCTSTR)filename, this);
+		symbolEngine.EnumerateSymbols((LPCTSTR)g_DllLocation, this);
 	}
 
 	// IEnumerateDebugSymbolsCallback callback

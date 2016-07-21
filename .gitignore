@@ -16,3 +16,16 @@ source/DP.opensdf
 *.tlh
 *.ipch
 
+/source/UnitTests/interfaces_p.c
+/source/UnitTests/interfaces_i.c
+/source/UnitTests/interfaces_h.h
+/source/DP.VC.VC.opendb
+/source/DP.VC.db
+/source/.vs/DP/v14/.suo
+/source/bin/UnitTests.tlb
+/source/bin/UnitTests.exp
+/source/gui/DP_p.c
+/source/gui/DP_i.c
+/source/gui/DP.tlb
+/source/gui/DP.h
+/source/Intermediate/DPInfiltrator/Debug

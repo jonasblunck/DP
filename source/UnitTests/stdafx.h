@@ -28,5 +28,5 @@ extern bool s_unittest_success;
 #include "GuidHelpers.h"
 #include "CS.h"
 
-#define DLL_LOCATION "c:\\dev\\c++\\dp\\source\\bin\\unittests.dll"
+extern CString g_DllLocation;
 
